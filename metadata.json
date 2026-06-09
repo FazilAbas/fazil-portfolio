@@ -1,0 +1,6 @@
+{
+  "name": "fazil-portfolio",
+  "description": "Personal Portfolio of Fazil A, Product Manager specializing in InvestTech, FinTech, EdTech, and Cybersecurity.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
