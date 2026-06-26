@@ -112,7 +112,7 @@ export const ProductsBuiltSection: React.FC = () => {
         {/* Scrollable Container */}
         <div
           ref={scrollRef}
-          className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory scroll-smooth cursor-grab active:cursor-grabbing"
+          className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scroll-smooth cursor-grab active:cursor-grabbing"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {BUILT_PRODUCTS.map((prod, index) => {

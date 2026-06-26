@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { X, Download, FileText, Mail, Phone, Linkedin } from "lucide-react";
 import { downloadFile } from "../utils";
+import { PERSONAL_INFO } from "../data";
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -76,17 +77,17 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             {/* --- HEADER --- */}
             <div className="mb-4">
               <div className="flex flex-row justify-between items-baseline gap-2 mb-1">
-                <h1 className="text-xl md:text-2xl font-bold text-black tracking-tight uppercase leading-none">Fazil A</h1>
+                <h1 className="text-xl md:text-2xl font-bold text-black tracking-tight uppercase leading-none">{PERSONAL_INFO.name}</h1>
                 <div className="flex flex-wrap items-center gap-x-2 text-[10px] sm:text-xs text-sky-600 font-semibold text-right">
-                  <a href="mailto:fazilabbaz@gmail.com" className="hover:underline flex items-center gap-1">
-                    <Mail className="w-3 h-3 text-sky-600 inline" /> fazilabbaz@gmail.com
+                  <a href={`mailto:${PERSONAL_INFO.email}`} className="hover:underline flex items-center gap-1">
+                    <Mail className="w-3 h-3 text-sky-600 inline" /> {PERSONAL_INFO.email}
                   </a>
                   <span className="text-zinc-300">|</span>
                   <span className="flex items-center gap-1 text-zinc-700">
-                    <Phone className="w-3 h-3 text-zinc-500 inline" /> 8075833967
+                    <Phone className="w-3 h-3 text-zinc-500 inline" /> {PERSONAL_INFO.phone}
                   </span>
                   <span className="text-zinc-300">|</span>
-                  <a href="https://www.linkedin.com/in/fazilabaz/" target="_blank" rel="noreferrer" className="hover:underline flex items-center gap-1">
+                  <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noreferrer" className="hover:underline flex items-center gap-1">
                     <Linkedin className="w-3 h-3 text-sky-600 inline" /> LinkedIn
                   </a>
                 </div>

@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "motion/react";
-import { Linkedin, Mail, ShieldCheck, Cpu, Layout, TrendingUp, ArrowDown, FileText } from "lucide-react";
+import { Linkedin, Mail, ShieldCheck, Cpu, Layout, TrendingUp } from "lucide-react";
 import { PERSONAL_INFO } from "../data";
-import { ResumeModal } from "./ResumeModal";
 
 // Profile image from assets
 import profileImage from "../assets/images/fazil_photo.jpg";
 
 export const Hero: React.FC = () => {
-  const [isResumeOpen, setIsResumeOpen] = useState(false);
-  
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -75,7 +72,7 @@ export const Hero: React.FC = () => {
           {/* Title Position */}
           <motion.h2
             variants={itemVariants}
-            className="font-display text-2xl md:text-3.5xl font-bold tracking-tight mb-5"
+            className="font-display text-2xl md:text-3xl font-bold tracking-tight mb-5"
           >
             <span className="text-sky-400">Associate Product Manager</span>
             <span className="block text-zinc-300 text-base md:text-lg font-medium mt-1">Building AI, FinTech & SaaS Products</span>
@@ -210,9 +207,6 @@ export const Hero: React.FC = () => {
         </div>
 
       </div>
-
-      {/* Interactive PDF-level Resume Viewer */}
-      <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
     </section>
   );
 };

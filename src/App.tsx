@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { ProductsBuiltSection } from "./components/ProductsBuiltSection";
@@ -9,9 +9,20 @@ import { CookieYesProjectPage } from "./components/CookieYesProjectPage";
 import { AlphaPulseProjectPage } from "./components/AlphaPulseProjectPage";
 import { GetAJobProjectPage } from "./components/GetAJobProjectPage";
 import { PERSONAL_INFO } from "./data";
-import { Compass } from "lucide-react";
+import { useEffect } from "react";
 
 function HomePage() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.scrollTo) {
+      setTimeout(() => {
+        const el = document.getElementById(location.state.scrollTo);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }, [location]);
+
   return (
     <>
       <Navbar />
@@ -44,6 +55,20 @@ function HomePage() {
   );
 }
 
+function NotFoundPage() {
+  return (
+    <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-6xl font-bold text-sky-400 mb-4">404</h1>
+        <p className="text-zinc-400 mb-6">Page not found</p>
+        <a href="/" className="text-sky-400 hover:text-sky-300 underline transition-colors">
+          Return to Portfolio
+        </a>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -53,6 +78,7 @@ export default function App() {
           <Route path="/project/cookieyes" element={<CookieYesProjectPage />} />
           <Route path="/project/alphapulse" element={<AlphaPulseProjectPage />} />
           <Route path="/project/getajob" element={<GetAJobProjectPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </BrowserRouter>

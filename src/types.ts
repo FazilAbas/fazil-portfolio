@@ -42,22 +42,3 @@ export interface BuiltProduct {
   category: string;
   description: string;
 }
-
-export interface ProjectDetail {
-  id: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  techStack: string[];
-  metrics: { label: string; value: string }[];
-  tasks: {
-    id: number;
-    title: string;
-    description: string;
-    keyFindings: string[];
-    pdfName: string;
-  }[];
-  keyFindings: string[];
-  dashboardPath: string;
-  accent: string;
-}

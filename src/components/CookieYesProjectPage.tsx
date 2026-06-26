@@ -182,11 +182,7 @@ export const CookieYesProjectPage: React.FC = () => {
   }, []);
 
   const handleBack = () => {
-    navigate("/#projects");
-    setTimeout(() => {
-      const el = document.getElementById("projects");
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-    }, 100);
+    navigate("/", { state: { scrollTo: "projects" } });
   };
 
   return (

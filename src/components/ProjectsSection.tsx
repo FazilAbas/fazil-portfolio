@@ -166,11 +166,7 @@ export const ProjectsSection: React.FC = () => {
                     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-zinc-900 via-zinc-950 to-black group-hover:scale-[1.025] transition-all duration-700">
                       <div className="text-center">
                         <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-zinc-800/50 border border-zinc-700/50 flex items-center justify-center">
-                          {project.cardIcon ? (
-                            <project.cardIcon className="w-6 h-6 text-zinc-300" />
-                          ) : (
-                            <BarChart3 className="w-6 h-6 text-zinc-300" />
-                          )}
+                          <BarChart3 className="w-6 h-6 text-zinc-300" />
                         </div>
                         <p className="text-xs font-bold text-white mb-0.5">{project.title.split(' ').slice(0, 2).join(' ')}</p>
                         <p className="text-[10px] text-zinc-500">{project.title.split(' ').slice(2).join(' ') || "Project"}</p>

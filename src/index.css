@@ -12,6 +12,7 @@
   --color-sky-200: #bae0fd;
   --color-sky-300: #7ec7fc;
   --color-sky-400: #38aefc;
+  --color-sky-450: #2ba0f5;
   --color-sky-500: #1B93F3; /* Matches the vibrant blue of the portrait background */
   --color-sky-550: #0c7de2;
   --color-sky-600: #0c7de2;
@@ -21,13 +22,24 @@
   --color-sky-800: #04305a;
   --color-sky-900: #021a32;
   --color-sky-950: #010d1a;
+
+  --color-amber-450: #d97706;
+  --color-amber-950: #2d1600;
+
+  --color-emerald-450: #10b981;
+  --color-emerald-950: #022c22;
+
+  --color-zinc-350: #a3a3a3;
+  --color-zinc-650: #525252;
+  --color-zinc-850: #262626;
+  --color-zinc-905: #171717;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #f8fafc;
-    color: #1e293b;
+    background-color: #000;
+    color: #f4f4f5;
     font-family: "Tahoma", "Geneva", ui-sans-serif, system-ui, sans-serif;
   }
 
@@ -58,4 +70,27 @@
 
 .button-glow:hover {
   box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+@keyframes fade-in-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-slide-up {
+  animation: fade-in-slide-up 0.3s ease-out;
 }

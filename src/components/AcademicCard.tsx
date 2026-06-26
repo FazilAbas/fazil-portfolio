@@ -29,7 +29,7 @@ export const AcademicCard: React.FC = () => {
             <div
               key={edu.id}
               id={`edu-card-${edu.id}`}
-              className="bg-zinc-900/10 hover:bg-zinc-900/30 border border-zinc-850 hover:border-sky-500/30 p-4 md:p-5 rounded-xl relative overflow-hidden transition-all duration-300 group shadow-sm flex flex-col gap-3.5 animate-in fade-in slide-in-from-bottom-2 duration-300"
+              className="bg-zinc-900/10 hover:bg-zinc-900/30 border border-zinc-850 hover:border-sky-500/30 p-4 md:p-5 rounded-xl relative overflow-hidden transition-all duration-300 group shadow-sm flex flex-col gap-3.5 animate-fade-in-slide-up"
             >
               {/* Top Accent Highlight */}
               <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-sky-500/5 to-transparent group-hover:via-sky-450/30 transition-all duration-300"></div>
