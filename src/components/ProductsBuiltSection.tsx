@@ -149,7 +149,7 @@ export const ProductsBuiltSection: React.FC = () => {
                     {prod.category}
                   </span>
 
-                  <p className="text-zinc-400 text-xs leading-relaxed group-hover:text-zinc-350 transition-colors duration-300">
+                  <p className="text-zinc-400 text-xs leading-relaxed group-hover:text-zinc-200 transition-colors duration-300">
                     {prod.description}
                   </p>
                 </div>

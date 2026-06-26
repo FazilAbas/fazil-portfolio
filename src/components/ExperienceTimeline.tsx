@@ -116,7 +116,7 @@ export const ExperienceTimeline: React.FC = () => {
                 {/* Achievements points checklist */}
                 <ul className="space-y-3.5">
                   {activeExp.points.map((point, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5 text-xs md:text-[13px] text-zinc-350 leading-relaxed font-sans">
+                    <li key={idx} className="flex items-start gap-2.5 text-xs md:text-[13px] text-zinc-200 leading-relaxed font-sans">
                       <CheckCircle2 className="w-4 h-4 text-sky-400 mt-0.5 flex-shrink-0" />
                       <span>{point}</span>
                     </li>

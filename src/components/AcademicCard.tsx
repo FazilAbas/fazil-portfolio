@@ -107,7 +107,7 @@ export const AcademicCard: React.FC = () => {
                   {edu.achievements.map((ach, index) => (
                     <div key={index} className="flex items-start gap-2 leading-relaxed font-sans">
                       <CheckCircle2 className="w-3.5 h-3.5 text-sky-450 mt-0.5 flex-shrink-0 opacity-90" />
-                      <span className="text-zinc-350">{ach}</span>
+                      <span className="text-zinc-200">{ach}</span>
                     </div>
                   ))}
                 </div>

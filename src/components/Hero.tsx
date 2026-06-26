@@ -72,10 +72,10 @@ export const Hero: React.FC = () => {
           {/* Title Position */}
           <motion.h2
             variants={itemVariants}
-            className="font-display text-2xl md:text-3xl font-bold tracking-tight mb-5"
+            className="font-display text-xl md:text-2xl font-bold tracking-tight mb-5"
           >
             <span className="text-sky-400">Associate Product Manager</span>
-            <span className="block text-zinc-300 text-base md:text-lg font-medium mt-1">Building AI, FinTech & SaaS Products</span>
+            <span className="block text-zinc-200 text-base md:text-lg font-medium mt-1">Building AI, FinTech & SaaS Products</span>
           </motion.h2>
 
           {/* Domain Badges */}
@@ -100,7 +100,7 @@ export const Hero: React.FC = () => {
           {/* Bio text block */}
           <motion.div
             variants={itemVariants}
-            className="font-sans text-zinc-350 text-[14px] md:text-[14.5px] leading-relaxed max-w-2xl mb-8 space-y-4"
+            className="font-sans text-zinc-200 text-[14px] md:text-[14.5px] leading-relaxed max-w-2xl mb-8 space-y-4"
           >
             <p>
               I’m <strong>Fazil A</strong>, an Associate Product Manager at Pinaca Technologies, where I'm building AI Enabled financial and intelligence platforms for BFSI and Law Enforcement Agencies.
@@ -108,7 +108,7 @@ export const Hero: React.FC = () => {
             <p>
               For almost 5 years, I've worked across B2C and B2B SaaS, consumer marketplace, and startup environments, solving complex product and business problems at scale.
             </p>
-            <ul className="list-disc pl-5 space-y-2 text-zinc-350 my-3">
+            <ul className="list-disc pl-5 space-y-2 text-zinc-200 my-3">
               <li>
                 At VMock, I worked on a global career-acceleration platform (B2C SaaS), focusing on product customization and delivery, feature development, client management, and data-driven improvements.
               </li>
