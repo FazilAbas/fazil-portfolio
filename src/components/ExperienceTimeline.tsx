@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Briefcase, Calendar, MapPin, CheckCircle2 } from "lucide-react";
 import { EXPERIENCES } from "../data";
+import { useTracking } from "./TrackingProvider";
 
 export const ExperienceTimeline: React.FC = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
+  const { track } = useTracking();
 
   const activeExp = EXPERIENCES[activeTab];
 
@@ -37,7 +39,7 @@ export const ExperienceTimeline: React.FC = () => {
             {EXPERIENCES.map((exp, index) => (
               <button
                 key={exp.id}
-                onClick={() => setActiveTab(index)}
+                onClick={() => { setActiveTab(index); track("experience_click", "experience", `Experience: ${exp.company}`, { companyId: exp.id }); }}
                 className={`relative flex-shrink-0 text-left px-5 py-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 flex items-center gap-4 w-auto lg:w-full whitespace-nowrap lg:whitespace-normal cursor-pointer ${
                   activeTab === index
                     ? "bg-zinc-900/85 text-sky-400 border border-zinc-800/90 shadow-[0_4px_20px_rgba(56,189,248,0.06)]"

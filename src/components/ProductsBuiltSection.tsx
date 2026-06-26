@@ -21,6 +21,7 @@ import {
   Cpu
 } from "lucide-react";
 import { BUILT_PRODUCTS } from "../data";
+import { useTracking } from "./TrackingProvider";
 
 // Helper to resolve appropriate icon for each product category
 const getProductIcon = (id: string) => {
@@ -60,8 +61,10 @@ const getProductIcon = (id: string) => {
 
 export const ProductsBuiltSection: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { track } = useTracking();
 
   const scroll = (direction: "left" | "right") => {
+    track("scroll_click", "products", `Scroll Products: ${direction}`, { direction });
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
       const scrollAmount = clientWidth * 0.75;

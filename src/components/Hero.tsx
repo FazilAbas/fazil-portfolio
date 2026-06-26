@@ -2,11 +2,13 @@ import React from "react";
 import { motion } from "motion/react";
 import { Linkedin, Mail, ShieldCheck, Cpu, Layout, TrendingUp } from "lucide-react";
 import { PERSONAL_INFO } from "../data";
+import { useTracking } from "./TrackingProvider";
 
 // Profile image from assets
 import profileImage from "../assets/images/fazil_photo.jpg";
 
 export const Hero: React.FC = () => {
+  const { track } = useTracking();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -139,6 +141,7 @@ export const Hero: React.FC = () => {
                 href={PERSONAL_INFO.linkedin}
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => track("linkedin_click", "social", "LinkedIn Profile (Hero)")}
                 className="group p-3 border border-sky-400/40 hover:border-sky-400 bg-transparent rounded-full text-sky-400 hover:bg-sky-400/10 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center"
                 title="LinkedIn Profile"
               >
@@ -147,6 +150,7 @@ export const Hero: React.FC = () => {
               <a
                 id="hero-mail-circular"
                 href={`mailto:${PERSONAL_INFO.email}`}
+                onClick={() => track("email_click", "social", "Email (Hero)")}
                 className="group p-3 border border-sky-400/40 hover:border-sky-400 bg-transparent rounded-full text-sky-400 hover:bg-sky-400/10 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center"
                 title="Send Email"
               >

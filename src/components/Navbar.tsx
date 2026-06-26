@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Menu, X, FileText, Download, ArrowUpRight } from "lucide-react";
 import { ResumeModal } from "./ResumeModal";
 import { downloadFile } from "../utils";
+import { useTracking } from "./TrackingProvider";
 
 export const Navbar: React.FC = () => {
+  const { track } = useTracking();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
@@ -79,7 +81,7 @@ export const Navbar: React.FC = () => {
         <div className="hidden lg:flex items-center gap-3.5">
           <button
             id="nav-resume-btn-desktop"
-            onClick={() => setIsResumeOpen(true)}
+            onClick={() => { track("resume_view", "resume", "View Resume (Desktop Nav)"); setIsResumeOpen(true); }}
             className="group flex items-center gap-2 bg-sky-400 text-black font-extrabold px-5 py-2 rounded-full text-sm hover:bg-sky-300 transition-all duration-300 shadow-[0_0_15px_rgba(56,189,248,0.25)] hover:shadow-[0_0_20px_rgba(56,189,248,0.45)] cursor-pointer active:scale-95 text-left"
           >
             <FileText className="w-4 h-4 text-black group-hover:rotate-6 transition-transform" />
@@ -90,7 +92,7 @@ export const Navbar: React.FC = () => {
           {/* Real direct download file link */}
           <button
             id="nav-resume-download-direct"
-            onClick={() => downloadFile("/Fazil_A_Resume.pdf", "Fazil_A_Resume.pdf")}
+            onClick={() => { track("resume_download", "resume", "Download Resume (Desktop Nav)"); downloadFile("/Fazil_A_Resume.pdf", "Fazil_A_Resume.pdf"); }}
             className="group flex items-center gap-1.5 bg-transparent border border-zinc-700 hover:border-sky-450 hover:bg-zinc-900/60 text-zinc-300 hover:text-white px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 cursor-pointer"
             title="Download PDF resume"
           >
@@ -101,12 +103,12 @@ export const Navbar: React.FC = () => {
 
         {/* Mobile menu controls */}
         <div className="flex items-center gap-3 lg:hidden">
-          <button
-            id="nav-resume-btn-mobile-shortcut"
-            onClick={() => setIsResumeOpen(true)}
-            className="p-2 border border-zinc-805 hover:border-sky-500 bg-zinc-900 text-sky-400 rounded-full transition-colors shadow-md flex items-center justify-center cursor-pointer"
-            title="View Resume"
-          >
+            <button
+              id="nav-resume-btn-mobile-shortcut"
+              onClick={() => { track("resume_view", "resume", "View Resume (Mobile Nav)"); setIsResumeOpen(true); }}
+              className="p-2 border border-zinc-805 hover:border-sky-500 bg-zinc-900 text-sky-400 rounded-full transition-colors shadow-md flex items-center justify-center cursor-pointer"
+              title="View Resume"
+            >
             <FileText className="w-4 h-4" />
           </button>
           
@@ -149,6 +151,7 @@ export const Navbar: React.FC = () => {
               id="nav-resume-btn-mobile"
               onClick={() => {
                 setMobileMenuOpen(false);
+                track("resume_view", "resume", "View Resume (Mobile Drawer)");
                 setIsResumeOpen(true);
               }}
               className="w-full flex items-center justify-center gap-2 bg-sky-450 text-black py-3 rounded-xl font-extrabold transition-all duration-300 cursor-pointer"
@@ -161,6 +164,7 @@ export const Navbar: React.FC = () => {
               id="nav-resume-download-mobile"
               onClick={() => {
                 setMobileMenuOpen(false);
+                track("resume_download", "resume", "Download Resume (Mobile Drawer)");
                 downloadFile("/Fazil_A_Resume.pdf", "Fazil_A_Resume.pdf");
               }}
               className="w-full flex items-center justify-center gap-2 bg-transparent border border-zinc-805 hover:bg-zinc-900 text-zinc-200 py-3 rounded-xl font-bold transition-all duration-300 cursor-pointer"

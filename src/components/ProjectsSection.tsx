@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
 import { FileText, ArrowUpRight, BarChart3, ExternalLink, Rocket, Search, Palette } from "lucide-react";
+import { useTracking } from "./TrackingProvider";
 
 import zomatoRetentionImage from "../assets/images/zomato_retention_slide_1780940588942.png";
 import districtCrmImage from "../assets/images/district_crm_slide_1780940606582.png";
@@ -137,6 +138,7 @@ const TIER_3_DESIGNS = [
 
 export const ProjectsSection: React.FC = () => {
   const navigate = useNavigate();
+  const { track } = useTracking();
 
   return (
     <section
@@ -184,7 +186,7 @@ export const ProjectsSection: React.FC = () => {
                 <div className="absolute -inset-1 bg-gradient-to-r from-zinc-800 to-zinc-900 rounded-[22px] opacity-10 group-hover:opacity-30 blur-md transition-all duration-500"></div>
 
                 <button
-                  onClick={() => navigate(product.route)}
+                  onClick={() => { track("project_click", "projects", `Case Study: ${product.title}`, { projectId: product.id }); navigate(product.route); }}
                   className={`w-full text-left relative bg-zinc-950/90 border border-zinc-800 ${product.accentBorder} rounded-2xl overflow-hidden transition-all duration-500 shadow-2xl cursor-pointer flex flex-col`}
                 >
                   {/* Image area */}
@@ -203,7 +205,7 @@ export const ProjectsSection: React.FC = () => {
                         href={product.liveUrl}
                         target="_blank"
                         rel="noreferrer"
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => { e.stopPropagation(); track("project_live", "projects", `Live Demo: ${product.title}`, { projectId: product.id, url: product.liveUrl }); }}
                         className={`absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-full ${product.accentBg} border border-current/20 ${product.accentText} text-[11px] font-bold backdrop-blur-sm hover:scale-105 transition-transform`}
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -281,7 +283,7 @@ export const ProjectsSection: React.FC = () => {
             <div className="absolute -inset-1 bg-gradient-to-r from-zinc-800 to-zinc-900 rounded-[22px] opacity-10 group-hover:opacity-30 blur-md transition-all duration-500"></div>
 
             <button
-              onClick={() => navigate(TIER_2_CONSULTING.route)}
+              onClick={() => { track("project_click", "projects", "Case Study: CookieYes Product Analytics", { projectId: "cookieyes" }); navigate(TIER_2_CONSULTING.route); }}
               className={`w-full text-left relative bg-zinc-950/90 border border-zinc-800 ${TIER_2_CONSULTING.accentBorder} rounded-2xl overflow-hidden transition-all duration-500 shadow-2xl cursor-pointer`}
             >
               <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -375,6 +377,7 @@ export const ProjectsSection: React.FC = () => {
                         href={project.pdfPath}
                         target="_blank"
                         rel="noreferrer"
+                        onClick={() => track("project_pdf", "projects", `PDF: ${project.title}`, { projectId: project.id })}
                         className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white text-black text-xs font-bold hover:bg-zinc-200 transition-colors no-underline"
                       >
                         <FileText className="w-3.5 h-3.5" />
@@ -385,6 +388,7 @@ export const ProjectsSection: React.FC = () => {
                           href={project.liveUrl}
                           target="_blank"
                           rel="noreferrer"
+                          onClick={() => track("project_live", "projects", `Live Demo: ${project.title}`, { projectId: project.id, url: project.liveUrl })}
                           className={`flex items-center gap-1.5 px-4 py-2 rounded-lg ${project.accentBg} ${project.accentText} text-xs font-bold border border-current/20 hover:scale-105 transition-all no-underline`}
                         >
                           <ExternalLink className="w-3.5 h-3.5" />

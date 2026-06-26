@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { EDUCATION_LIST } from "../data";
+import { useTracking } from "./TrackingProvider";
 
 const CERTIFICATIONS = [
   { name: "CFA Level 1", issuer: "CFA Institute", status: "Active Candidate" },
@@ -16,6 +17,7 @@ const CERTIFICATIONS = [
 export const AcademicCard: React.FC = () => {
   const [expandedEdu, setExpandedEdu] = useState<string | null>(null);
   const [showCerts, setShowCerts] = useState(false);
+  const { track } = useTracking();
 
   return (
     <section id="education" className="py-20 bg-black border-t border-zinc-900 relative overflow-hidden text-white">
@@ -46,7 +48,7 @@ export const AcademicCard: React.FC = () => {
               >
                 {/* Header row - always visible */}
                 <button
-                  onClick={() => hasDetails && setExpandedEdu(isExpanded ? null : edu.id)}
+                  onClick={() => { if (hasDetails) { setExpandedEdu(isExpanded ? null : edu.id); track("education_click", "education", `Education: ${edu.institution}`, { eduId: edu.id, expanded: !isExpanded }); } }}
                   className={`w-full text-left p-5 flex items-start justify-between gap-4 bg-zinc-900/20 hover:bg-zinc-900/40 transition-colors cursor-pointer ${!hasDetails ? "cursor-default" : ""}`}
                 >
                   <div className="flex-1 min-w-0">
@@ -103,7 +105,7 @@ export const AcademicCard: React.FC = () => {
         {/* Certifications */}
         <div className="mt-8">
           <button
-            onClick={() => setShowCerts(!showCerts)}
+            onClick={() => { setShowCerts(!showCerts); track("education_click", "education", `Certifications: ${!showCerts ? "Expand" : "Collapse"}`); }}
             className="flex items-center gap-2 text-xs font-mono text-zinc-500 hover:text-zinc-300 transition-colors cursor-pointer mb-3"
           >
             <span>Professional Certifications</span>
