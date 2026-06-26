@@ -8,8 +8,6 @@ import { AcademicCard } from "./components/AcademicCard";
 import { CookieYesProjectPage } from "./components/CookieYesProjectPage";
 import { AlphaPulseProjectPage } from "./components/AlphaPulseProjectPage";
 import { GetAJobProjectPage } from "./components/GetAJobProjectPage";
-import { AnalyticsPage } from "./components/AnalyticsPage";
-import { TrackingProvider } from "./components/TrackingProvider";
 import { PERSONAL_INFO } from "./data";
 import { useEffect } from "react";
 
@@ -48,8 +46,7 @@ function HomePage() {
           </div>
           <div className="text-center md:text-right">
             <span className="text-[11px] text-zinc-400 font-mono tracking-wider font-semibold">
-              <a href="/analytics" className="hover:text-sky-400 transition-colors">Analytics</a>
-              {" | "}&copy; 2026 Fazil A | All Rights Reserved.
+              &copy; 2026 Fazil A | All Rights Reserved.
             </span>
           </div>
         </div>
@@ -75,18 +72,15 @@ function NotFoundPage() {
 export default function App() {
   return (
     <BrowserRouter>
-      <TrackingProvider>
-        <div id="full-portfolio-wrapper" className="min-h-screen bg-black text-zinc-100 flex flex-col selection:bg-sky-500/30 selection:text-sky-400">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/project/cookieyes" element={<CookieYesProjectPage />} />
-            <Route path="/project/alphapulse" element={<AlphaPulseProjectPage />} />
-            <Route path="/project/getajob" element={<GetAJobProjectPage />} />
-            <Route path="/analytics" element={<AnalyticsPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </div>
-      </TrackingProvider>
+      <div id="full-portfolio-wrapper" className="min-h-screen bg-black text-zinc-100 flex flex-col selection:bg-sky-500/30 selection:text-sky-400">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/project/cookieyes" element={<CookieYesProjectPage />} />
+          <Route path="/project/alphapulse" element={<AlphaPulseProjectPage />} />
+          <Route path="/project/getajob" element={<GetAJobProjectPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }
