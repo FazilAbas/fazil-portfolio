@@ -229,11 +229,11 @@ export const AlphaPulseProjectPage: React.FC = () => {
         >
           <h2 className="text-sm font-bold text-zinc-500 uppercase tracking-wider mb-6">Live Platform</h2>
           <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl overflow-hidden">
-            <div className="relative aspect-[16/8] bg-zinc-950">
+            <div className="relative bg-zinc-950">
               <img
-                src="/alphapulse-home.png"
-                alt="AlphaPulse AI Dashboard"
-                className="w-full h-full object-cover"
+                src="/alphapulse-performance.png"
+                alt="AlphaPulse AI – Recommendation Tracker"
+                className="w-full h-auto object-cover object-top"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">

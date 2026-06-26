@@ -83,7 +83,7 @@ export const ProductsBuiltSection: React.FC = () => {
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 gap-4">
           <div>
             <h2 className="font-display text-2xl md:text-3xl font-extrabold tracking-tight text-white">
-              Products I Have Built and Managed
+              Products I Have Built and Managed Professionally
             </h2>
             <p className="text-zinc-400 text-sm mt-1.5 max-w-xl">
               14 corporate SaaS, FinTech, and Enterprise platforms driving high-leverage business value.

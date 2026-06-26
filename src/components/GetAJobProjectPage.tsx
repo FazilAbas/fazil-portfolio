@@ -135,7 +135,7 @@ export const GetAJobProjectPage: React.FC = () => {
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Projects</span>
           </button>
-          <span className="text-xs font-mono text-zinc-600">Local Only — Not Deployed</span>
+          <span className="text-xs font-mono text-zinc-600">Local Only – Not Deployed</span>
         </div>
       </div>
 
@@ -161,7 +161,7 @@ export const GetAJobProjectPage: React.FC = () => {
           <p className="text-base md:text-lg text-zinc-400 max-w-3xl leading-relaxed">
             An autonomous AI agent that monitors LinkedIn for hiring posts, classifies them against your
             profile, generates personalized application emails, and automatically applies via email or
-            web forms — all orchestrated on a cron schedule with a full-featured admin dashboard.
+            web forms – all orchestrated on a cron schedule with a full-featured admin dashboard.
           </p>
         </motion.div>
 
@@ -237,65 +237,64 @@ export const GetAJobProjectPage: React.FC = () => {
           className="mb-16"
         >
           <h2 className="text-sm font-bold text-zinc-500 uppercase tracking-wider mb-6">
-            Admin Dashboard — 10 Tabs
+            Agent Control & Management Dashboard
           </h2>
           <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl overflow-hidden">
             {/* Screenshot display */}
-            <div className="relative aspect-[16/8] bg-zinc-950">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={activeScreenshot}
-                  src={DASHBOARD_TABS[activeScreenshot].image}
-                  alt={DASHBOARD_TABS[activeScreenshot].name}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-full h-full object-cover"
-                />
-              </AnimatePresence>
-
-              {/* Navigation arrows */}
-              <button
-                onClick={prevScreenshot}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 transition-colors cursor-pointer"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                onClick={nextScreenshot}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 transition-colors cursor-pointer"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-
-              {/* Tab label */}
-              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-                <span className="text-xs font-mono text-zinc-400 bg-black/60 px-2 py-1 rounded">
-                  {DASHBOARD_TABS[activeScreenshot].name}
-                </span>
-                <span className="text-[11px] text-zinc-500 bg-black/60 px-2 py-1 rounded max-w-[60%] text-right">
-                  {DASHBOARD_TABS[activeScreenshot].description}
-                </span>
+            <div className="relative bg-zinc-950">
+              <div className="aspect-[16/8]">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={activeScreenshot}
+                    src={DASHBOARD_TABS[activeScreenshot].image}
+                    alt={DASHBOARD_TABS[activeScreenshot].name}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="w-full h-full object-cover object-top"
+                  />
+                </AnimatePresence>
               </div>
             </div>
 
-            {/* Tab thumbnails */}
-            <div className="flex gap-2 p-3 overflow-x-auto">
-              {DASHBOARD_TABS.map((tab, i) => (
-                <button
-                  key={tab.name}
-                  onClick={() => setActiveScreenshot(i)}
-                  className={`flex-shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer border-0 ${
-                    activeScreenshot === i
-                      ? "bg-violet-500/20 text-violet-400 border border-violet-500/30"
-                      : "bg-zinc-900 text-zinc-500 hover:text-zinc-300"
-                  }`}
-                  style={activeScreenshot === i ? { border: '1px solid rgba(139,92,246,0.3)' } : {}}
-                >
-                  {tab.name}
-                </button>
-              ))}
+            {/* Description below image */}
+            <div className="px-5 py-4 border-t border-zinc-800/50">
+              <p className="text-sm text-zinc-400 leading-relaxed">
+                {DASHBOARD_TABS[activeScreenshot].description}
+              </p>
+            </div>
+
+            {/* Navigation + Tab thumbnails */}
+            <div className="flex items-center gap-3 px-4 pb-4">
+              <button
+                onClick={prevScreenshot}
+                className="flex-shrink-0 w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 transition-colors cursor-pointer"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <div className="flex gap-2 overflow-x-auto flex-1">
+                {DASHBOARD_TABS.map((tab, i) => (
+                  <button
+                    key={tab.name}
+                    onClick={() => setActiveScreenshot(i)}
+                    className={`flex-shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer border-0 ${
+                      activeScreenshot === i
+                        ? "bg-violet-500/20 text-violet-400 border border-violet-500/30"
+                        : "bg-zinc-900 text-zinc-500 hover:text-zinc-300"
+                    }`}
+                    style={activeScreenshot === i ? { border: '1px solid rgba(139,92,246,0.3)' } : {}}
+                  >
+                    {tab.name}
+                  </button>
+                ))}
+              </div>
+              <button
+                onClick={nextScreenshot}
+                className="flex-shrink-0 w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 transition-colors cursor-pointer"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
           </div>
         </motion.div>
@@ -389,7 +388,7 @@ export const GetAJobProjectPage: React.FC = () => {
           className="text-center py-12 border-t border-zinc-900"
         >
           <p className="text-sm text-zinc-500 mb-4">
-            Runs locally — fully autonomous job application pipeline
+            Runs locally – fully autonomous job application pipeline
           </p>
           <div className="flex items-center justify-center gap-4">
             <button

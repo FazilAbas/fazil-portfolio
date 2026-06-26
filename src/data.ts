@@ -123,7 +123,6 @@ export const EDUCATION_LIST: Education[] = [
     location: "USA / Online",
     majors: "Finance, Quantitative Analysis & Portfolio Management",
     achievements: [
-      "Active Candidate specializing in deep financial analysis.",
       "Coursework: Equity, Fixed Income, Derivatives, Alternative Investments, Portfolio Management, Financial Statement Analysis, Economics, and Quantitative Methods."
     ]
   },
@@ -149,7 +148,7 @@ export const EDUCATION_LIST: Education[] = [
     period: "August 2018",
     location: "India",
     majors: "Accounting & Auditing Fundamentals",
-    achievements: ["Successfully completed the foundational requirements of ICAI CA examination."]
+    achievements: ["Successfully completed the foundational level examination of Chartered Accountancy (CA) course."]
   },
   {
     id: "higher-secondary",
