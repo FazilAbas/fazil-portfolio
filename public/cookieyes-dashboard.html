@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CookieYes Product Analytics</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #ffffff;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --blue-500: #3b82f6;
+    --blue-600: #2563eb;
+    --green-500: #22c55e;
+    --green-600: #16a34a;
+    --red-500: #ef4444;
+    --red-600: #dc2626;
+    --yellow-500: #eab308;
+    --yellow-600: #ca8a04;
+    --purple-500: #a855f7;
+    --teal-500: #14b8a6;
+    --orange-500: #f97316;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-800);
+    line-height: 1.5;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 32px;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 48px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gray-900);
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .header p {
+    font-size: 15px;
+    color: var(--gray-500);
+  }
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--gray-500);
+  }
+  .header-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .header-meta strong {
+    color: var(--gray-700);
+    font-weight: 600;
+  }
+
+  /* Executive Summary */
+  .exec-summary {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+  }
+  .exec-summary h2 {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-500);
+    margin-bottom: 16px;
+  }
+  .exec-summary ul {
+    list-style: none;
+    display: grid;
+    gap: 12px;
+  }
+  .exec-summary li {
+    font-size: 14px;
+    color: var(--gray-700);
+    padding-left: 20px;
+    position: relative;
+  }
+  .exec-summary li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .exec-summary li.finding::before { background: var(--red-500); }
+  .exec-summary li.insight::before { background: var(--blue-500); }
+  .exec-summary li.action::before { background: var(--green-500); }
+
+  /* KPI Row */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .kpi-label {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: var(--gray-500);
+    margin-bottom: 8px;
+  }
+  .kpi-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gray-900);
+    letter-spacing: -0.5px;
+  }
+  .kpi-change {
+    font-size: 12px;
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .kpi-change.negative { color: var(--red-600); }
+  .kpi-change.positive { color: var(--green-600); }
+  .kpi-change.neutral { color: var(--gray-500); }
+
+  /* Section */
+  .section {
+    margin-bottom: 40px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 6px;
+  }
+  .section-subtitle {
+    font-size: 13px;
+    color: var(--gray-500);
+    margin-bottom: 20px;
+  }
+
+  /* Chart Grid */
+  .chart-grid {
+    display: grid;
+    gap: 20px;
+  }
+  .chart-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .chart-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .chart-grid.cols-12 { grid-template-columns: 1.2fr 1fr; }
+
+  .chart-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 24px;
+  }
+  .chart-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 4px;
+  }
+  .chart-card .subtitle {
+    font-size: 12px;
+    color: var(--gray-500);
+    margin-bottom: 16px;
+  }
+  canvas { max-height: 240px; }
+
+  /* Funnel */
+  .funnel { padding: 8px 0; }
+  .funnel-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 12px;
+  }
+  .funnel-label {
+    width: 120px;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-600);
+    flex-shrink: 0;
+  }
+  .funnel-bar-wrap {
+    flex: 1;
+    height: 32px;
+    background: var(--gray-100);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .funnel-bar {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--white);
+  }
+  .funnel-pct {
+    width: 50px;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-700);
+    flex-shrink: 0;
+  }
+  .funnel-drop {
+    font-size: 11px;
+    color: var(--red-500);
+    width: 70px;
+    flex-shrink: 0;
+    font-weight: 500;
+  }
+
+  /* Insight Box */
+  .insight {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--gray-700);
+    line-height: 1.6;
+  }
+  .insight strong {
+    font-weight: 600;
+    color: var(--gray-900);
+  }
+  .insight.critical {
+    border-left: 3px solid var(--red-500);
+    background: #fef2f2;
+  }
+  .insight.opportunity {
+    border-left: 3px solid var(--green-500);
+    background: #f0fdf4;
+  }
+  .insight.warning {
+    border-left: 3px solid var(--yellow-500);
+    background: #fefce8;
+  }
+
+  /* Table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    font-size: 13px;
+  }
+  .data-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-500);
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .data-table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--gray-700);
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: var(--gray-50); }
+  .data-table .highlight { font-weight: 600; color: var(--gray-900); }
+
+  /* Badge */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge.green { background: #dcfce7; color: var(--green-600); }
+  .badge.red { background: #fee2e2; color: var(--red-600); }
+  .badge.yellow { background: #fef9c3; color: var(--yellow-600); }
+  .badge.blue { background: #dbeafe; color: var(--blue-600); }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--gray-200);
+    margin: 40px 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container { padding: 24px 16px; }
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .chart-grid.cols-2, .chart-grid.cols-12, .chart-grid.cols-3 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>CookieYes Product Analytics</h1>
+    <p>Customer lifecycle analysis and growth opportunities</p>
+    <div class="header-meta">
+      <span>Period: <strong>June - September 2025</strong></span>
+      <span>Accounts: <strong>5,010</strong></span>
+      <span>Revenue: <strong>$111,041</strong></span>
+    </div>
+  </div>
+
+  <!-- Executive Summary -->
+  <div class="exec-summary">
+    <h2>Executive Summary</h2>
+    <ul>
+      <li class="finding">Only 39.5% of signups become subscribers — the biggest growth blocker is getting users to subscribe</li>
+      <li class="finding">Campaign C has the lowest ROAS (0.09x) — $263K spent returns only $24K in revenue</li>
+      <li class="insight">Organic users convert at 50.3% and retain at 41.1% — the highest quality channel with zero acquisition cost</li>
+      <li class="insight">Enterprise generates 34.2% of revenue despite equal subscriber count — highest value segment</li>
+      <li class="action">Priority 1: Fix activation flow to convert more signups to subscribers</li>
+      <li class="action">Priority 2: Pause Campaign C and reallocate budget to Campaign B (best CPA at $13.58)</li>
+      <li class="action">Priority 3: Address 24.7% invoice failure rate to recover lost revenue</li>
+    </ul>
+  </div>
+
+  <!-- KPI Row -->
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-label">Subscription Rate</div>
+      <div class="kpi-value">39.5%</div>
+      <div class="kpi-change negative">60.5% of signups never subscribe</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Trial to Paid</div>
+      <div class="kpi-value">49.0%</div>
+      <div class="kpi-change positive">Healthy conversion once subscribed</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Active Retention</div>
+      <div class="kpi-value">19.8%</div>
+      <div class="kpi-change negative">80.2% of signups churn or never convert</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">ROAS</div>
+      <div class="kpi-value">0.22x</div>
+      <div class="kpi-change negative">Spending $4.55 to earn $1 in revenue</div>
+    </div>
+  </div>
+
+  <!-- Section 1: The Funnel Problem -->
+  <div class="section">
+    <h2 class="section-title">Where Users Drop Off</h2>
+    <p class="section-subtitle">The funnel reveals three critical bottlenecks: activation, subscription, and paid conversion</p>
+
+    <div class="chart-grid cols-12">
+      <div class="chart-card">
+        <h3>Customer Lifecycle Funnel</h3>
+        <p class="subtitle">From signup to active paying customer</p>
+        <div class="funnel" id="main-funnel"></div>
+      </div>
+      <div class="chart-card">
+        <h3>Subscription Status</h3>
+        <p class="subtitle">Current state of all 2,505 subscriptions</p>
+        <div style="display:flex;justify-content:center"><canvas id="statusDonut"></canvas></div>
+      </div>
+    </div>
+
+    <div class="insight critical">
+      <strong>The core problem:</strong> 80% of signups never activate (use a feature). Users are signing up but not experiencing the product's value. This is the single largest opportunity for growth.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Section 2: What Drives Conversion -->
+  <div class="section">
+    <h2 class="section-title">What Drives Conversion</h2>
+    <p class="section-subtitle">Source quality and plan type significantly impact conversion rates</p>
+
+    <div class="chart-grid cols-2">
+      <div class="chart-card">
+        <h3>Trial-to-Paid Conversion by Source</h3>
+        <p class="subtitle">Organic leads at 50.3% — quality over volume</p>
+        <div style="display:flex;justify-content:center"><canvas id="convBySource"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>Conversion by Plan</h3>
+        <p class="subtitle">Basic converts best (51.6%), Enterprise worst (43.8%)</p>
+        <div style="display:flex;justify-content:center"><canvas id="convByPlan"></canvas></div>
+      </div>
+    </div>
+
+    <div class="insight opportunity">
+      <strong>Opportunity:</strong> Organic traffic converts 50.3% — higher than any paid channel. Investing in SEO and content marketing could deliver more high-converting signups at lower cost.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Section 3: What Drives Retention -->
+  <div class="section">
+    <h2 class="section-title">What Drives Retention</h2>
+    <p class="section-subtitle">LinkedIn users stay longest, Google Ads users churn fastest</p>
+
+    <div class="chart-grid cols-2">
+      <div class="chart-card">
+        <h3>Active Subscription Rate by Source</h3>
+        <p class="subtitle">LinkedIn 43.1% vs Google Ads 36.7% retention</p>
+        <div style="display:flex;justify-content:center"><canvas id="retBySource"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>Churn Rate by Plan</h3>
+        <p class="subtitle">Pro has highest churn (40.3%), Basic lowest (39.0%)</p>
+        <div style="display:flex;justify-content:center"><canvas id="churnByPlan"></canvas></div>
+      </div>
+    </div>
+
+    <div class="insight warning">
+      <strong>Volume vs Quality tradeoff:</strong> Google Ads drives 33.5% of signups but has the worst retention (36.7%). LinkedIn drives 17% of signups with the best retention (43.1%). Consider shifting budget toward higher-quality channels.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Section 4: What Drives Revenue -->
+  <div class="section">
+    <h2 class="section-title">What Drives Revenue</h2>
+    <p class="section-subtitle">Enterprise generates most revenue, but invoice failures are leaking income</p>
+
+    <div class="chart-grid cols-12">
+      <div class="chart-card">
+        <h3>Monthly Revenue Trend</h3>
+        <p class="subtitle">September spike driven by annual renewals or bulk invoicing</p>
+        <div style="display:flex;justify-content:center"><canvas id="revTrend"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>Revenue by Plan</h3>
+        <p class="subtitle">Enterprise: $37,989 (34.2%) despite equal subscriber count</p>
+        <div style="display:flex;justify-content:center"><canvas id="revByPlan"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-grid cols-2" style="margin-top:20px">
+      <div class="chart-card">
+        <h3>Revenue by Acquisition Source</h3>
+        <p class="subtitle">Google Ads: $38K, Organic: $29K, LinkedIn: $21K</p>
+        <div style="display:flex;justify-content:center"><canvas id="revBySource"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>Invoice Status</h3>
+        <p class="subtitle">24.7% failure rate = $47K in failed payments</p>
+        <div style="display:flex;justify-content:center"><canvas id="invoiceStatus"></canvas></div>
+      </div>
+    </div>
+
+    <div class="insight critical">
+      <strong>Revenue leakage:</strong> 417 failed invoices (24.7%) represent potential lost income. Implementing automated dunning — card retry, payment update prompts, and proactive outreach — could recover an estimated $27K+ annually.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Section 5: Campaign Efficiency -->
+  <div class="section">
+    <h2 class="section-title">Campaign Efficiency</h2>
+    <p class="section-subtitle">Campaign C is unprofitable — every dollar spent loses money</p>
+
+    <div class="chart-grid cols-12">
+      <div class="chart-card">
+        <h3>Campaign ROAS Comparison</h3>
+        <p class="subtitle">Campaign C returns only $0.09 per $1 spent</p>
+        <div style="display:flex;justify-content:center"><canvas id="campaignRoas"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>Campaign Performance</h3>
+        <p class="subtitle">Full breakdown of spend, conversions, and efficiency</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Campaign</th>
+              <th>Spend</th>
+              <th>Conversions</th>
+              <th>CPA</th>
+              <th>ROAS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="highlight">Campaign A</td>
+              <td>$134,646</td>
+              <td>7,475</td>
+              <td>$18.01</td>
+              <td><span class="badge yellow">0.23x</span></td>
+            </tr>
+            <tr>
+              <td class="highlight">Campaign B</td>
+              <td>$118,021</td>
+              <td>8,689</td>
+              <td><span style="color:var(--green-600)">$13.58</span></td>
+              <td><span class="badge green">0.45x</span></td>
+            </tr>
+            <tr>
+              <td class="highlight">Campaign C</td>
+              <td>$263,244</td>
+              <td>18,806</td>
+              <td>$14.00</td>
+              <td><span class="badge red">0.09x</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="insight critical">
+      <strong>Immediate action required:</strong> Campaign C has spent $263K with only 0.09x ROAS — the lowest efficiency. Pause this campaign and reallocate budget to Campaign B (best ROAS at 0.45x). This alone could save $100K+ annually.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Section 6: Recommendations -->
+  <div class="section">
+    <h2 class="section-title">Strategic Recommendations</h2>
+    <p class="section-subtitle">Data-backed priorities for the next 90 days</p>
+
+    <div class="chart-grid cols-3">
+      <div class="chart-card" style="border-top: 3px solid var(--red-500);">
+        <h3>1. Fix Activation Flow</h3>
+        <p class="subtitle">Impact: High | Effort: Medium</p>
+        <p style="font-size:13px;color:var(--gray-700);line-height:1.6">
+          60.5% of signups never subscribe. Redesign onboarding to guide users to their first value moment within 5 minutes. Expected outcome: 10-15% improvement in subscription rate.
+        </p>
+      </div>
+      <div class="chart-card" style="border-top: 3px solid var(--red-500);">
+        <h3>2. Pause Campaign C</h3>
+        <p class="subtitle">Impact: High | Effort: Low</p>
+        <p style="font-size:13px;color:var(--gray-700);line-height:1.6">
+          Lowest ROAS (0.09x) means poor returns on every dollar. Pause immediately and reallocate to Campaign B (best ROAS at 0.45x). Expected outcome: $100K+ annual savings.
+        </p>
+      </div>
+      <div class="chart-card" style="border-top: 3px solid var(--yellow-500);">
+        <h3>3. Fix Invoice Failures</h3>
+        <p class="subtitle">Impact: Medium | Effort: Low</p>
+        <p style="font-size:13px;color:var(--gray-700);line-height:1.6">
+          24.7% invoice failure rate is leaking revenue. Implement dunning automation (retry logic, payment prompts). Expected outcome: recover $27K+ annually in failed payments.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="margin-top:48px;padding-top:24px;border-top:1px solid var(--gray-200);font-size:12px;color:var(--gray-400);text-align:center">
+    Data source: CookieYes product database (June - September 2025) | Analysis period: 4 months | 5,010 accounts analyzed
+  </div>
+
+</div>
+
+<script>
+const COLORS = {
+  blue: '#3b82f6',
+  green: '#22c55e',
+  red: '#ef4444',
+  yellow: '#eab308',
+  purple: '#a855f7',
+  teal: '#14b8a6',
+  orange: '#f97316',
+  gray: '#9ca3af'
+};
+
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.color = '#6b7280';
+Chart.defaults.borderColor = '#e5e7eb';
+
+// Funnel
+function renderFunnel() {
+  const el = document.getElementById('main-funnel');
+  if (!el || el.dataset.rendered) return;
+  el.dataset.rendered = '1';
+  
+  const stages = ['Signup', 'Activated', 'Subscribed', 'Converted', 'Active'];
+  const counts = [5010, 1002, 1977, 1227, 993];
+  const colors = [COLORS.blue, COLORS.purple, COLORS.teal, COLORS.yellow, COLORS.green];
+  const max = counts[0];
+  
+  stages.forEach((stage, i) => {
+    const pct = (counts[i] / max * 100).toFixed(0);
+    const dropPct = i > 0 ? Math.abs((counts[i] - counts[i-1]) / counts[i-1] * 100).toFixed(0) : null;
+    
+    const row = document.createElement('div');
+    row.className = 'funnel-row';
+    row.innerHTML = `
+      <div class="funnel-label">${stage}</div>
+      <div class="funnel-bar-wrap">
+        <div class="funnel-bar" style="width:${pct}%;background:${colors[i]}">
+          ${counts[i].toLocaleString()}
+        </div>
+      </div>
+      <div class="funnel-pct">${pct}%</div>
+      ${dropPct ? `<div class="funnel-drop">${dropPct}% drop</div>` : '<div style="width:70px"></div>'}
+    `;
+    el.appendChild(row);
+  });
+}
+
+const charts = {};
+function mkChart(id, config) {
+  if (charts[id]) charts[id].destroy();
+  const canvas = document.getElementById(id);
+  if (!canvas) return;
+  charts[id] = new Chart(canvas, config);
+}
+
+function initCharts() {
+  renderFunnel();
+  
+  // Status Donut
+  mkChart('statusDonut', {
+    type: 'doughnut',
+    data: {
+      labels: ['Active', 'Trialing', 'Canceled'],
+      datasets: [{
+        data: [993, 522, 990],
+        backgroundColor: [COLORS.green, COLORS.yellow, COLORS.red],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      cutout: '65%',
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, boxWidth: 12, font: { size: 12 } } }
+      }
+    }
+  });
+  
+  // Conversion by Source
+  mkChart('convBySource', {
+    type: 'bar',
+    data: {
+      labels: ['Organic', 'Google Ads', 'Referral', 'LinkedIn'],
+      datasets: [{
+        data: [50.3, 49.8, 49.0, 45.2],
+        backgroundColor: [COLORS.green, COLORS.blue, COLORS.yellow, COLORS.teal],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { min: 40, max: 55, ticks: { callback: v => v + '%' } }
+      }
+    }
+  });
+  
+  // Conversion by Plan
+  mkChart('convByPlan', {
+    type: 'bar',
+    data: {
+      labels: ['Basic', 'Pro', 'Enterprise'],
+      datasets: [{
+        data: [51.6, 50.1, 43.8],
+        backgroundColor: [COLORS.green, COLORS.blue, COLORS.purple],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { min: 35, max: 55, ticks: { callback: v => v + '%' } }
+      }
+    }
+  });
+  
+  // Retention by Source
+  mkChart('retBySource', {
+    type: 'bar',
+    data: {
+      labels: ['LinkedIn', 'Organic', 'Referral', 'Google Ads'],
+      datasets: [{
+        data: [43.1, 41.1, 39.8, 36.7],
+        backgroundColor: [COLORS.green, COLORS.teal, COLORS.yellow, COLORS.red],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { min: 30, max: 50, ticks: { callback: v => v + '%' } }
+      }
+    }
+  });
+  
+  // Churn by Plan
+  mkChart('churnByPlan', {
+    type: 'bar',
+    data: {
+      labels: ['Pro', 'Enterprise', 'Basic'],
+      datasets: [{
+        data: [40.3, 39.2, 39.0],
+        backgroundColor: [COLORS.red, COLORS.orange, COLORS.yellow],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { min: 35, max: 45, ticks: { callback: v => v + '%' } }
+      }
+    }
+  });
+  
+  // Revenue Trend
+  mkChart('revTrend', {
+    type: 'line',
+    data: {
+      labels: ['Jun', 'Jul', 'Aug', 'Sep'],
+      datasets: [{
+        data: [18876, 13086, 17089, 52483],
+        borderColor: COLORS.green,
+        backgroundColor: 'rgba(34,197,94,0.1)',
+        fill: true,
+        tension: 0.4,
+        pointRadius: 6,
+        pointBackgroundColor: COLORS.green
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K' } }
+      }
+    }
+  });
+  
+  // Revenue by Plan
+  mkChart('revByPlan', {
+    type: 'doughnut',
+    data: {
+      labels: ['Enterprise', 'Pro', 'Basic'],
+      datasets: [{
+        data: [37989, 33999, 29547],
+        backgroundColor: [COLORS.purple, COLORS.blue, COLORS.teal],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      cutout: '60%',
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, boxWidth: 12, font: { size: 12 } } }
+      }
+    }
+  });
+  
+  // Revenue by Source
+  mkChart('revBySource', {
+    type: 'bar',
+    data: {
+      labels: ['Google Ads', 'Organic', 'LinkedIn', 'Referral'],
+      datasets: [{
+        data: [38078, 29366, 20673, 19936],
+        backgroundColor: [COLORS.blue, COLORS.green, COLORS.teal, COLORS.yellow],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K' } }
+      }
+    }
+  });
+  
+  // Invoice Status
+  mkChart('invoiceStatus', {
+    type: 'doughnut',
+    data: {
+      labels: ['Paid', 'Failed', 'Refunded'],
+      datasets: [{
+        data: [879, 417, 394],
+        backgroundColor: [COLORS.green, COLORS.red, COLORS.orange],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      cutout: '60%',
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, boxWidth: 12, font: { size: 12 } } }
+      }
+    }
+  });
+  
+  // Campaign ROAS
+  mkChart('campaignRoas', {
+    type: 'bar',
+    data: {
+      labels: ['Campaign A', 'Campaign B', 'Campaign C'],
+      datasets: [{
+        data: [0.23, 0.45, 0.09],
+        backgroundColor: [COLORS.yellow, COLORS.green, COLORS.red],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { 
+          min: 0,
+          max: 0.6,
+          ticks: { callback: v => v.toFixed(2) + 'x' }
+        }
+      }
+    }
+  });
+}
+
+window.addEventListener('DOMContentLoaded', initCharts);
+</script>
+</body>
+</html>

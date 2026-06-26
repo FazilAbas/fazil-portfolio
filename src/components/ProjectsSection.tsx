@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "motion/react";
-import { FileText, ArrowUpRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { FileText, ArrowUpRight, BarChart3 } from "lucide-react";
 
 // Import generated premium project slide assets
 import zomatoRetentionImage from "../assets/images/zomato_retention_slide_1780940588942.png";
@@ -9,6 +10,8 @@ import salaryseImage from "../assets/images/salaryse_benefits_1780939941992.png"
 import linnkAtlasImage from "../assets/images/linnk_atlas_ai_1780993073500.png";
 
 export const ProjectsSection: React.FC = () => {
+  const navigate = useNavigate();
+
   const projects = [
     {
       id: "Linnk Atlas AI v1.0",
@@ -19,6 +22,7 @@ export const ProjectsSection: React.FC = () => {
       accent: "from-sky-600/10 via-zinc-900/5 to-transparent",
       borderColor: "group-hover:border-sky-500/40",
       glowColor: "rgba(56,189,248,0.15)",
+      isRoute: false,
     },
     {
       id: "How Can Zomato Improve User Retention",
@@ -29,6 +33,7 @@ export const ProjectsSection: React.FC = () => {
       accent: "from-red-650/10 via-zinc-900/5 to-transparent",
       borderColor: "group-hover:border-red-500/40",
       glowColor: "rgba(239,68,68,0.15)",
+      isRoute: false,
     },
     {
       id: "District CRM Growth & Lifecycle Orchestration Concept",
@@ -39,6 +44,7 @@ export const ProjectsSection: React.FC = () => {
       accent: "from-teal-600/10 via-zinc-900/5 to-transparent",
       borderColor: "group-hover:border-teal-500/40",
       glowColor: "rgba(20,184,166,0.15)",
+      isRoute: false,
     },
     {
       id: "SalarySe Flexi Benefits",
@@ -49,6 +55,51 @@ export const ProjectsSection: React.FC = () => {
       accent: "from-emerald-600/10 via-zinc-900/5 to-transparent",
       borderColor: "group-hover:border-emerald-500/40",
       glowColor: "rgba(16,185,129,0.15)",
+      isRoute: false,
+    },
+    {
+      id: "Phishing Detection & Takedowns Module",
+      title: "Phishing Detection & Takedowns Module",
+      description: "Product research for an AI-powered phishing detection and takedown module — covering threat identification, URL analysis, brand impersonation detection, and automated remediation workflows.",
+      image: "/phishing_thumbnail.svg",
+      pdfPath: "/Phishing_Detection_Takedowns_Module.pdf",
+      accent: "from-red-600/10 via-zinc-900/5 to-transparent",
+      borderColor: "group-hover:border-red-500/40",
+      glowColor: "rgba(239,68,68,0.15)",
+      isRoute: false,
+    },
+    {
+      id: "CookieYes Product Analytics",
+      title: "CookieYes Product Analytics",
+      description: "End-to-end SaaS product analytics covering 5,010 users across the full lifecycle. Built with Python, SQL, SQLite, and Chart.js — 25+ queries, 11 interactive charts, 6 deliverables.",
+      image: "/cookieyes_thumbnail.svg",
+      pdfPath: "/project/cookieyes",
+      accent: "from-amber-600/10 via-zinc-900/5 to-transparent",
+      borderColor: "group-hover:border-amber-500/40",
+      glowColor: "rgba(245,158,11,0.15)",
+      isRoute: true,
+    },
+    {
+      id: "AlphaPulse AI",
+      title: "AlphaPulse AI",
+      description: "AI-powered stock recommendation platform for Indian swing traders. 3 engines (Gemini LLM, Premium Swing, Damani 6-Filter), real-time tracking, and self-learning system.",
+      image: "/alphapulse_thumbnail.svg",
+      pdfPath: "/project/alphapulse",
+      accent: "from-cyan-600/10 via-zinc-900/5 to-transparent",
+      borderColor: "group-hover:border-cyan-500/40",
+      glowColor: "rgba(6,182,212,0.15)",
+      isRoute: true,
+    },
+    {
+      id: "Get-a-Job Agent",
+      title: "Get-a-Job Agent",
+      description: "Autonomous AI agent that monitors LinkedIn, classifies hiring posts with LLM analysis, and auto-applies via email and web forms on a cron schedule.",
+      image: "/getajob_thumbnail.svg",
+      pdfPath: "/project/getajob",
+      accent: "from-violet-600/10 via-zinc-900/5 to-transparent",
+      borderColor: "group-hover:border-violet-500/40",
+      glowColor: "rgba(139,92,246,0.15)",
+      isRoute: true,
     },
   ];
 
@@ -90,29 +141,57 @@ export const ProjectsSection: React.FC = () => {
               {/* Clickable Card Link */}
               <a
                 href={project.pdfPath}
-                target="_blank"
-                rel="noreferrer"
-                className="block relative bg-zinc-950/90 border border-zinc-800 group-hover:border-sky-500/40 rounded-2xl overflow-hidden p-2.5 transition-all duration-500 shadow-2xl overflow-hidden"
+                target={project.isRoute ? "_self" : "_blank"}
+                rel={project.isRoute ? undefined : "noreferrer"}
+                onClick={
+                  project.isRoute
+                    ? (e) => {
+                        e.preventDefault();
+                        navigate(project.pdfPath);
+                      }
+                    : undefined
+                }
+                className={`block relative bg-zinc-950/90 border border-zinc-800 ${project.borderColor} rounded-2xl overflow-hidden p-2.5 transition-all duration-500 shadow-2xl overflow-hidden`}
               >
                 {/* Sleek tablet/screen inner gradient frame matching screenshot */}
                 <div className="relative rounded-xl overflow-hidden aspect-[16/9] border border-zinc-900 group-hover:border-zinc-800 transition-colors duration-500 bg-zinc-900">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover group-hover:scale-[1.025] transition-all duration-700"
-                  />
+                  {project.image ? (
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover group-hover:scale-[1.025] transition-all duration-700"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-zinc-900 via-zinc-950 to-black group-hover:scale-[1.025] transition-all duration-700">
+                      <div className="text-center">
+                        <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-zinc-800/50 border border-zinc-700/50 flex items-center justify-center">
+                          {project.cardIcon ? (
+                            <project.cardIcon className="w-6 h-6 text-zinc-300" />
+                          ) : (
+                            <BarChart3 className="w-6 h-6 text-zinc-300" />
+                          )}
+                        </div>
+                        <p className="text-xs font-bold text-white mb-0.5">{project.title.split(' ').slice(0, 2).join(' ')}</p>
+                        <p className="text-[10px] text-zinc-500">{project.title.split(' ').slice(2).join(' ') || "Project"}</p>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Glassy overlay trigger on hover */}
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-6 gap-3">
                     <div className="w-12 h-12 rounded-full bg-sky-400 text-black flex items-center justify-center shadow-lg transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300">
-                      <FileText className="w-6 h-6 font-bold" />
+                      {project.isRoute ? (
+                        <BarChart3 className="w-6 h-6 font-bold" />
+                      ) : (
+                        <FileText className="w-6 h-6 font-bold" />
+                      )}
                     </div>
                     <span className="font-display font-bold text-white tracking-wide text-center translate-y-3 group-hover:translate-y-0 transition-transform duration-300 delay-75">
-                      Open Project PDF
+                      {project.isRoute ? "View Case Study" : "Open Project PDF"}
                     </span>
                     <span className="text-xs text-zinc-400 tracking-wider">
-                      Opens in browser tab
+                      {project.isRoute ? "Full analysis overview" : "Opens in browser tab"}
                     </span>
                   </div>
                 </div>
@@ -128,7 +207,7 @@ export const ProjectsSection: React.FC = () => {
                     </p>
                   </div>
                   <div className="flex items-center justify-end gap-1 text-xs text-zinc-500 group-hover:text-sky-450 transition-all font-mono mt-2 self-end">
-                    <span>PDF</span>
+                    <span>{project.isRoute ? "Case Study" : "PDF"}</span>
                     <ArrowUpRight className="w-3.5 h-3.5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </div>
                 </div>
