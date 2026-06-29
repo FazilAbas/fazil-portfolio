@@ -259,8 +259,9 @@ export const ProjectsSection: React.FC = () => {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════
-            TIER 2 — ANALYTICS & CONSULTING
+            TIER 2 — ANALYTICS & CONSULTING (TEMPORARILY HIDDEN)
             ═══════════════════════════════════════════════════════════ */}
+        {false && (
         <div className="mb-20">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20">
@@ -285,7 +286,6 @@ export const ProjectsSection: React.FC = () => {
               className={`w-full text-left relative bg-zinc-950/90 border border-zinc-800 ${TIER_2_CONSULTING.accentBorder} rounded-2xl overflow-hidden transition-all duration-500 shadow-2xl cursor-pointer`}
             >
               <div className="grid grid-cols-1 lg:grid-cols-2">
-                {/* Image side */}
                 <div className="relative aspect-[16/9] lg:aspect-auto lg:min-h-[320px] border-b lg:border-b-0 lg:border-r border-zinc-900 bg-zinc-900 overflow-hidden">
                   <img
                     src={TIER_2_CONSULTING.image}
@@ -296,7 +296,6 @@ export const ProjectsSection: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/40 lg:block hidden" />
                 </div>
 
-                {/* Content side */}
                 <div className="p-6 lg:p-8 flex flex-col justify-center">
                   <div className="flex items-center gap-2 mb-3">
                     <span className="text-[10px] font-mono font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 uppercase tracking-wider">
@@ -332,6 +331,7 @@ export const ProjectsSection: React.FC = () => {
             </button>
           </motion.div>
         </div>
+        )}
 
         {/* ═══════════════════════════════════════════════════════════
             TIER 3 — PRODUCT THINKING & DESIGN
